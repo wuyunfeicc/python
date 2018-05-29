@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>js蛇形文字</title>
+	<style type="text/css">
+		span{
+			color:orange;
+			position:absolute;
+			tot:-22px;
+
+		}
+	</style>
+</head>
+<body>
+
+</body>
+</html>
+<script type="text/javascript">
+	//利用循环生成span标签
+	var str='python is best word for all world'
+	for(var i=0;i<str.length;i++){
+		document.write('<span id='+i+'>')
+		document.write(str[i])
+		document.write('</span>')
+		//alert(i)
+	}
+	//鼠标移动事件
+	document.onmousemove=function(event){
+		document.title=event.clientX+','+event.clientY
+	
+	//加定时器
+	var id=0
+	var t = setInterval(function(){
+		snake(event.clientX,event.clientY,id)
+		id++
+		console.log(id)
+		if(id>31){
+			clearInterval(t)
+			}
+
+		},50)
+	}	
+	//定义一个执行标签跟随鼠标移动得函数
+	function snake(x,y,z){
+		var s=document.getElementById(z)
+		console.log(s)
+
+		s.style.left=x+15+(z*20)+'px'
+		s.style.top=y+'px'
+	}
+	
+</script>

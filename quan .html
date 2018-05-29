@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>全选，全不选，反选</title>
+</head>
+<body>
+	<form>爱好：<br/>
+		<input type="checkbox">1
+		<input type="checkbox">2
+		<input type="checkbox">3
+		<input type="checkbox">4
+		<input type="checkbox">5
+		<input type="checkbox">6
+		<input type="checkbox">7
+
+	</form>
+	<button>全选</button>
+	<button>全不选</button>
+	<button>反选</button>
+
+</body>
+</html>
+<script type="text/javascript">
+	var ins=document.getElementsByTagName('input')
+	console.log(ins)
+	var bs=document.getElementsByTagName('button')
+	bs[0].onclick=function(){
+		for(var i=0;i<ins.length;i++){
+			ins[i].checked=true
+		}
+	}
+	bs[1].onclick=function(){
+		for(var i=0;i<ins.length;i++){
+			ins[i].checked=false
+		}
+	}
+	bs[2].onclick=function(){
+		for(var i=0;i<ins.length;i++){
+			if(ins[i].checked==true){
+				ins[i].checked=false
+			}else{
+				ins[i].checked=true
+			}
+		}
+	}
+
+
+</script>
