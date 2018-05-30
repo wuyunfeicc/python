@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>表单事件</title>
+</head>
+<body>
+	<form action="" method="" accept-charset="utf-8">
+		文本：<input type="text" name="" id='username'>
+		<select name='' id='s'>
+			<option value="" selected='1' disabled='1'>---请选择---</option>}
+			<option value="0">北京</option>}
+			<option value="1">河北</option>}
+			<option value="2">河南</option>}
+			<option value="3">辽宁</option>}
+			
+		</select>
+		<span id='span'></span>
+
+	</form>
+	<form action="" onsubmit='return func1()' onreset='return func2()'>
+		<input type="text" name="">
+		<input type="submit" name="">
+		<input type="reset" name="">
+	</form>
+</body>
+</html>
+<script type="text/javascript">
+	/*
+		事件：
+			onfocus 获取焦点
+			onblur 失去焦点
+			onsubmit 当提交得时候
+			onreset 当重置得时候
+			onselect 选中 一般用在 text 或者textarea中
+			onchange 改变
+
+
+
+
+	*/
+	var n=document.getElementById('username')
+	n.onselect=function(){
+		alert('我被选中了')
+	}
+	n.onfocus=function(){
+		n.style.border='1px solid red'
+	}
+	n.onblur=function(){
+		n.style.border='1px solid green'
+	}
+	var s=document.getElementById('s')
+	var lis=[
+			['东城区','西城区','朝阳区','海淀区'],
+			['石家庄','张家口','保定','衡水'],
+			['郑州','开封','洛阳','合肥'],
+			['沈阳','大连','营口','葫芦岛'],
+	]
+	var span=document.getElementById('span')
+	s.onchange=function(){
+		var num=this.value
+		var info=lis[num]
+		var str=''
+		for(var i=0;i<lis.length;i++){
+			str+="<option>"+info[i]+"</option>"
+		}
+		span.innerHTML="<select>"+str+"</select>"
+
+	}
+	//提交函数
+	function func1(){
+		return false
+	}
+	function func2(){
+		return false
+	}
+</script>
