@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>js得键盘事件</title>
+</head>
+<body>
+
+</body>
+</html>
+<script type="text/javascript">
+	
+/*
+	event 对象
+	onkeydown 当键盘按下
+	onkeyup 当键盘抬起
+	onkeypress 按住
+	keyCode 字母编号
+	shiftkey shift键
+	altkey alt键
+	ctrlkey ctrl键
+
+*/
+		window.onkeydown=function(e){
+			var e=e||window.event
+			if(e.keyCode==65){
+				console.log('a')
+			}
+			//加上shift组合键
+			if(e.shiftKey && e.keyCode==66){
+				alert('B')
+			} 
+		}
+		window.onkeyup=function(e){
+			if(e.keyCode==67)
+				alert('c')
+		}
+
+		//charCode
+		window.onkeypress=function(e){
+			console.log(e.charCode)
+		}
+
+</script>
