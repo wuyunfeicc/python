@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jq版得全选反选</title>
+	<script type="text/javascript" src="./jquery.min.js"></script>
+</head>
+<body>
+	<form>
+		<input type="checkbox" name="">1
+		<input type="checkbox" name="">2
+		<input type="checkbox" name="">3
+		<input type="checkbox" name="">4
+		<input type="checkbox" name="">5
+		<input type="checkbox" name="">6
+		<input type="checkbox" name="">7
+		<input type="checkbox" name="">8
+
+
+	</form>
+	<button mm='1'>全选</button>
+	<button mm='2'>
+		全不选
+	</button>
+	<button mm='3'>反选</button>
+</body>
+</html>
+<script type="text/javascript">
+	$('button').click(function(){
+		var res=$(this).attr('mm')
+		//alert(res)
+		switch(res){
+			case '1':
+			$('input').attr('checked',true)
+			break
+			case '2':
+			$('input').attr('checked',false)
+			break
+			case '3':
+			//选出所有选中得
+			var a=$('input:checked')
+			console.log(a)
+			//所有得全选中
+			$('input').attr('checked',true)
+			//让当前选中得对象变为不选中
+			a.attr('checked',false)
+
+			break
+		}
+	})
+</script>
