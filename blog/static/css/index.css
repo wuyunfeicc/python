@@ -1,0 +1,13 @@
+.header,.footer{
+    width:800px;
+    height:100px;
+    border:1px solid #ccc;
+    margin:auto;
+    background:orange;
+}
+.body{
+    width:800px;
+    height:600px;
+    background:pink;
+    margin:auto
+}

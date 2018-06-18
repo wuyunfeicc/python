@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %} " rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/xiangqingye.css' %}" type="text/css">
+</head>
+<body>
+<div>
+    <h1 >{{ article.title }}</h1>
+    <span>作者：{{ article.autor }}</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  时间：{{ article.add_time|date:'Y-m-d H:m:s' }}
+</div>
+<p>{{ article.content }}</p>
+<a href="{% url 'xs' %}">返回</a>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="box">
+    {% if request.session.usename %}
+        欢迎你：{{ request.session.usename }} 登录 <a href="{% url 'zhuxiao' %}">注销账号</a>
+    {% else %}
+    <a href="{% url 'zhuce' %}">注册</a>
+    <a href="{% url 'denglu' %}">登录</a>
+    {% endif %}
+</div>
+</body>
+</html>
