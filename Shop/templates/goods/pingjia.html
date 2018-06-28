@@ -1,0 +1,41 @@
+<style>
+    .pingjia{
+        width:1200px;
+        height:800px;
+
+        margin: 0 auto;
+    }
+    .pingjia form{
+        position: relative;top:150px
+    }
+</style>
+{% extends 'user/basc.html' %}
+{% load static %}
+<link href="{% static 'bootstrap/css/bootstrap.css' %} " rel="stylesheet" type="text/css">
+{% block body %}
+    <div class="pingjia">
+        <form action="{% url 'users:pingjiado' %}" method="post" class="form-horizontal" role="form">
+        {% csrf_token %}
+           <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label">文本框</label>
+                <div class="col-sm-8">
+                        <textarea class="form-control" rows="10" name="comment_content">
+                        </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label"></label>
+                <div class="col-sm-5">
+                        <input type="submit" value="提交评价" class="btn btn-danger">
+                </div>
+            </div>
+            {% for i in order %}
+                <input type="hidden" name = 'manager_id' value="{{ i.manager_id }}">
+                <input type="hidden" name = 'user_id' value="{{ i.user_id }}">
+                <input type="hidden" name = 'goods_id' value="{{ i.goods_id }}">
+                <input type="hidden" name = 'order_id' value="{{ i.order_id }}">
+                <input type="hidden" name = 'details_id' value="{{ i.details_id }}">
+            {% endfor %}
+        </form>
+    </div>
+{% endblock %}

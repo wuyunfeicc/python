@@ -1,0 +1,21 @@
+#table{
+    margin:0 auto
+}
+.td1{
+    font-size: 20px;
+    font-family: 微软雅黑;
+}
+.td2,.td3,.td4{
+    color:#999999;
+    font-size: 12px;
+    font-family: 微软雅黑;
+}
+.td1 td,.td2 td,.td3 td,.td4 td{
+    padding-right:100px;
+    padding-left:50px;
+    padding-top:10px;
+}
+.tu-footer{
+    width:1290px;
+    margin: 0 auto;
+}

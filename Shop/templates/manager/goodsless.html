@@ -1,0 +1,40 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+  <div class="x-body">
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>商品id</th>
+            <th>商品编号</th>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th>商品库存</th>
+            <th>操作</th>
+			</tr>
+        </thead>
+        <tbody>
+            {% for goods in goods %}
+                {% if goods.goods_count <= 50 %}
+                    <tr>
+                        <td>{{ goods.id }}</td>
+                        <td>{{ goods.goods_num }}</td>
+                        <td><img src="{% static goods.goods_pic %}" alt=""></td>
+                        <td>{{ goods.goods_name }}</td>
+                        <td style="font-size: 30px;color: red">还剩下{{ goods.goods_count }}了</td>
+                        <td>
+                            <a href="{% url 'manager:goodsbuchong' goods.id%}">
+                                补充货源
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% empty %}
+                    <tr>
+                        <td colspan="6" align="center">暂无要补充的货品</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

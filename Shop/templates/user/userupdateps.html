@@ -1,0 +1,82 @@
+<style>
+    .box-userup{
+        width:1000px;
+        height:600px;
+        margin: 0 auto;
+    }
+    .box-userup form{
+        position: relative;
+        top:200px;
+        left:330px
+    }
+</style>
+{% extends 'user/user_base.html' %}
+{% block  box %}
+    <div class="box-userup">
+        <form action="{% url 'users:updatepsdo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            原密码：<input type="text" id="userpass" ><br>
+            当前密码：<input type="text"  id="userxpass"><br>
+            确认密码：<input type="text" id="userqrpass"><br>
+            <input type="button" value="修改" id="btu">
+            <input type="reset" value="重置"><br>
+        </form>
+{#        #通过js来判断表单的内容#}
+<script>
+    $('#btu').click(function(){
+        {#获取表单内容#}
+        var userpass = $('#userpass').val()
+        var userxpass = $('#userxpass').val()
+        var userqrpass = $('#userqrpass').val()
+        {#csrf-token#}
+        var token = $("input[name='csrfmiddlewaretoken']").val()
+    {#    判断#}
+        if(userpass == ''){
+            alert('请输入原密码')
+            return false
+        }
+        if (userxpass == ''||userqrpass ==''){
+            alert('请输入新密码或者确认密码')
+            return false
+        }
+        else {
+            if(userqrpass!=userxpass){
+                alert('俩次输入的密码不一致')
+                return false
+            }
+        }
+    {#    用ajax#}
+        $.ajax({
+            type:'POST',
+            url:"{% url 'users:updatepsdo' %}",
+        {#    转换成JSON字符串格式，类似于字典的样式#}
+            data:JSON.stringify({
+            'userpass':userpass,
+            'userxpass':userxpass,
+            'userqrpass':userqrpass,
+            {#csrf-token#}
+            'csrfmiddlewaretoken':token
+        }),
+            headers:{
+            'X-CSRFTOKEN':token
+            },
+            contentType:'application/json',
+            success:function (msg) {
+             if(msg == 1){
+                 alert('原密码输入不正确')
+                 return false
+             }else if(msg == 2){
+                 alert('原密码不能和新密码一致')
+                 return false
+             }else {
+                 alert('密码修改成功')
+                 window.location.href = "{% url 'users:denglu' %}"
+                 return false
+             }
+            }
+        })
+
+    })
+</script>
+    </div>
+{% endblock %}

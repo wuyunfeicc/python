@@ -1,0 +1,70 @@
+<style>
+    .store-left{
+        width:220px;
+        height:220px;
+        position: relative;
+        left:100px;
+        margin-top:100px
+    }
+    .store-left p{
+        background-color: green;
+        font-size: 18px;
+        height:60px;
+        line-height: 60px;
+        color:white;
+        padding-left: 10px;
+
+    }
+    .store-main{
+        width: 1700px;
+        margin:0 auto;
+        font-family: 微软雅黑;
+    }
+    .goods-list{
+        position: relative;
+        top:-220px;
+        left:400px
+    }
+    .goods-list li{
+        width:200px;
+        height:262px;
+        margin-right:50px;
+    }
+</style>
+{% extends 'user/basc.html' %}
+{% load static %}
+{% block body %}
+    <div class="store-main">
+        <div class="store-left">
+           <p>产品类型</p>
+            {% for i in type %}
+                <a href="{% url 'store:store_goodstype' i.type_id %}">
+                    <p>
+                        {{ i.type_name }}
+                    </p>
+                </a>
+           {% endfor %}
+        </div>
+        <div class="goods-list">
+            {% for i in list %}
+                <li>
+                    <a href="{% url 'goods:goods_xiangqing' i.id %}">
+                        <img src="{% static i.goods_pic %}" alt="">
+                    </a>
+                    <p>
+                        {% if i.goods_name|length >= 12 %}
+                            <a href="{% url 'goods:goods_xiangqing' i.id %}">
+                                {{ i.goods_name|slice:"12" }}
+                            </a>...
+                        {% else %}
+                            <a href="{% url 'goods:goods_xiangqing' i.id %}">
+                                {{ i.goods_name }}
+                            </a>
+                        {% endif %}
+                    </p>
+                    <p>￥{{ i.goods_xprice }}元</p>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

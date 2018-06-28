@@ -1,0 +1,23 @@
+{% extends "user/basc.html" %}
+{% load static %}
+{% block body %}
+<div class="middle" >
+    <img src="{% static 'images/1_07.gif' %}" alt="">
+    <div id="form1">
+        <form action="{% url 'users:zcdo' %}" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <b>昵称：</b> <input type="text"  name="username" class="form-control" ><br>
+            <b>密码：</b><input type="password"  name="userpass"  class="form-control"  ><br>
+            <b>确认密码：</b><input type="password" name="querenps" class="form-control" ><br>
+            <b>用户头像：</b><input type="file" name="user_pic" class="form-control" ><br>
+            <b>用户邮箱：</b><input type="email" name="user_email" class="form-control" ><br>
+            <div class="but">
+                <input type="submit" value="注册"  class="btn btn-success">
+                <input type="submit" value="会员登录" class="btn btn-success" >
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

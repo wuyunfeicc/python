@@ -1,0 +1,43 @@
+<style>
+    .dizhi{
+        width:1200px;
+        height:600px;
+        margin: 0 auto;
+    }
+    .dizhi p{
+        height:62px;
+        font-size: 24px;
+        font-family: 微软雅黑;
+        line-height: 62px;
+        margin-top:24px;
+        border-bottom: 2px solid #4e5465;
+    }
+    .dizhi span{
+        font-size:22px;
+        font-family: 微软雅黑;
+        font-weight: bold;
+    }
+    .dizhi input{
+        margin-bottom: 24px;
+    }
+</style>
+{% extends "user/basc.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="dizhi">
+        <p>添加收货地址</p>
+        <form action="{% url 'cart:address_shdo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <span> 收货人： &nbsp  &nbsp </span><input type="text" name="uname"><br>
+            <span> 联系电话 ：  </span><input type="text" name="phone"><br>
+            <span> 收货地址： &nbsp</span><input type="text" name="address" style="width:380px"><br>
+            <input type="submit" value="保存收货人信息"
+                   style="width:116px;height:30px;background-color: #64a131;line-height:30px;
+                   font-size:14px;text-align:center;color: white;border-radius:6px;
+                   position: relative;left: 122px;">
+        </form>
+
+    </div>
+{% endblock %}
+

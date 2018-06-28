@@ -1,0 +1,28 @@
+<style>
+    .store-index{
+        width:1500px;
+        margin: 0 auto;
+    }
+
+</style>
+{% extends 'user/basc.html' %}
+{% load static %}
+{% block body %}
+    <div class="store-index">
+        <ol>
+            {% for i in list %}
+                <div style="float: left;width: 300px;height: 300px">
+                     <li>
+                         <a href="{% url 'store:storedetails' i.manager_id %}">
+                            <img src="{% static i.shop_logo %}" alt="" width="200px" height="220px">
+                         </a>
+                         <a href="{% url 'store:storedetails' i.manager_id %}">
+                            <p>{{ i.shop_name }}</p>
+                         </a>
+                         <p>{{ i.nicheng }}</p>
+                     </li>
+                </div>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}

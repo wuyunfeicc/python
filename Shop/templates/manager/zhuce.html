@@ -1,0 +1,57 @@
+<style>
+    .salestore{
+        width:1300px;
+        height:500px;
+        margin: auto;
+        font-size:18px;
+    }
+    form{
+        padding-left:40px;
+        font-family: 微软雅黑;
+        font-size:18px;
+    }
+    p{
+        color:#1AA093;
+        font-size:22px;
+        font-family: 微软雅黑;
+    }
+    .salestore div{
+        margin-bottom: 20px;
+    }
+
+</style>
+{% extends 'user/basc.html' %}
+{% block body %}
+    <div class="salestore">
+        <p>卖家注册表</p>
+        <form action="{% url 'manager:zhucedo' %}" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div>
+                <lable>用户名：</lable>
+                <input type="text" name="username" id="">
+            </div>
+            <div>
+                <lable>密码：</lable>
+                <input type="password" name="userpass" id="">
+                (初始密码是“000000”)
+            </div>
+             <div>
+                <lable>昵称：</lable>
+                <input type="text" name="nicheng" id="">
+             </div>
+            <div>
+                <lable>店铺名：</lable>
+                <input type="text" name="shop_name" id="">
+            </div>
+            <div>
+                <lable>店铺logo：</lable>
+                <input type="file" name="shop_logo" id="">
+            </div>
+            <div>
+                <lable>店铺地址：</lable>
+                <input type="text" name="address" id="">
+            </div>
+                <input type="submit" value="注册">
+        </form>
+    </div>
+{% endblock %}

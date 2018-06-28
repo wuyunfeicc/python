@@ -1,0 +1,209 @@
+<style>
+    *{
+        padding: 0;
+        margin:0
+    }
+    .goods_xq{
+        width:1400px;
+        margin: 0 auto;
+        font-family: 微软雅黑;
+    }
+    .box_pic{
+       margin-left: 50px;
+        margin-top: 80px;
+        float: left;
+
+    }
+    .box_xq{
+        position: relative;
+        left:150px;
+        width:600px;
+    }
+    .box_jg{
+        width:650px;
+        height:50px;
+        line-height:50px;
+
+    }
+    .box_jg1{
+        color:red;
+        font-size: 36px;
+    }
+    .box_xq div{
+        margin-bottom: 10px;
+    }
+    .shuliang{
+        width:35px;
+    }
+    .btu1,.btu2{
+        width:28px
+    }
+    .gouwuche{
+        background: #64a131;
+        width:100px;
+        height:40px;
+        font-family: 微软雅黑;
+        font-size:18px;
+        margin-left:90px;
+        border-radius: 5px;
+    }
+    .other{
+        clear:both;
+        margin-top:200px;
+    }
+    .other p{
+        width:230px;
+        height:40px;
+        background:green;
+        color:#ffffff;
+        line-height: 40px;
+        padding-left:30px;
+        margin: 0;
+    }
+    .other1{
+        border:1px solid #d4d4d4;
+        width:230px;
+    }
+    dd p{
+        color:red
+    }
+    .other1{
+        float:left;
+        margin-bottom:200px
+    }
+    dd{
+        position: relative;
+        left: 80px;
+        top:-50px
+    }
+   dd span{
+       font-weight:bold;
+       font-size:20px
+   }
+    .other2 {
+        width:800px;
+        position:relative;
+        left:400px;
+        top:-40px
+    }
+    .other2 p{
+        width:800px;
+        height:40px;
+        line-height: 40px;
+        color:#ffffff;
+        background:green;
+        position: absolute;padding-left:30px;
+
+    }
+    .content{
+         width:800px;
+         border:1px solid #d4d4d4;
+         position: absolute;
+         top:40px
+    }
+    .goods_pingjia p{
+        width:800px;;
+        height:40px;
+        line-height: 40px;
+        padding-left:30px;
+        background:green;
+        color:#ffffff;
+    }
+    .goods_pingjia{
+
+        margin-bottom: 20px;
+        height:700px
+    }
+    .goods_pingjia1{
+         position: absolute;
+        left:650px;
+        top:880px;
+        border:1px solid #d4d4d4;
+    }
+
+
+
+</style>
+
+{% extends 'user/basc.html' %}
+{% load static %}
+<script src="{% static 'js/dec.js' %}"></script>
+{% block body %}
+    <div class="goods_xq">
+        <div class="goods_type"><a href="{% url 'users:index' %}" style="color:999999;font-family: 微软雅黑">首页></a><span style="color:green">{{ shop.goods_name }}</span>
+        店铺名：<span>
+                    <a href="{% url 'store:storedetails' manager.manager_id %}">
+                        {{ manager.shop_name }}
+                    </a>
+                </span>
+        </div>
+        <div class="box_pic">
+            <img src="{% static shop.goods_pic %}" alt="" style="width:320px;height:320px">
+        </div>
+    <div class="box_xq">
+        <form action="{% url 'cart:cart_add' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>{{ shop.goods_name }}</h1>
+            <span>{{ shop.goods_infor}}</span>
+            <div class="box_jg">
+                价格：￥<span class="box_jg1">{{ shop.goods_xprice}}</span>
+                元&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <s>{{ shop.goods_oprice }}</s>
+            </div>
+            <div class="box_ps">配送：{{ shop.goods_address }}</div>
+            <div>存储方法：{{ shop.goods_method }}</div>
+            <div>库存：{{ shop.goods_count }}</div>
+            <div>数量：
+                <input type="button" onclick="dec()" value="-" class="btu1">
+                <input type="text" value="1" class="shuliang" id="count" name="count">
+                <input type="button" onclick="add ()" value="+" class="btu2">
+            </div>
+            <input type="hidden" name="gname" value="{{ shop.goods_name }}">
+            <input type="hidden" name="gxprice" value="{{ shop.goods_xprice }}">
+            <input type="hidden" name="gpic" value="{{ shop.goods_pic }}">
+            <input type="hidden" name="manager_id" value="{{ shop.manager_id }}">
+            <input type="hidden" name="goods_id" value="{{ shop.id }}">
+            <div class="" ><input type="submit" value="加入购物车" class="gouwuche"></div>
+        </form>
+    </div>
+    <div>
+        <div class="other"><p>其他商品</p></div>
+        <div class="other1">
+            {% for i in list %}
+                <dl>
+                    <dt><a href="{% url 'goods:goods_xiangqing' i.id %}"><img src="{% static i.goods_pic %}" style="width:60px;height:60px"></a></dt>
+                    <dd style="width:140px">
+                        <span>
+                            {% if i.goods_name|length >= 15 %}
+                                <a href="{% url 'goods:goods_xiangqing' i.id %}">{{ i.goods_name|slice:'15' }}</a>...
+                            {% else %}
+                                <a href="{% url 'goods:goods_xiangqing' i.id %}">{{ i.goods_name }}</a>
+                            {% endif %}
+                        </span>
+                        <p>￥{{ i.goods_xprice }}元</p>
+                    </dd>
+                </dl>
+            {% endfor %}
+        </div>
+        <div class="other2">
+            <p>商品详情</p>
+                <div class="content">
+                    {{ shop.goods_content }}
+                </div>
+        </div>
+        <div class="goods_pingjia">
+            <div class="goods_pingjia1">
+                <p>商品评价</p>
+                    {% for i in user %}
+                        <div>
+                            {{ i.comment_time }}<br>
+                            <img src="{% static i.user_pic %}" alt="">
+                            {{ i.username }}<br>
+                            {{ i.comment_content }}<br>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

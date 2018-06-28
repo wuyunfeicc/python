@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/bottom.css' %}">
+    <link href="{% static 'bootstrap/css/bootstrap.css' %} " rel="stylesheet" type="text/css">
+    <script src="{% static 'js/dec.js' %}"></script>
+    <script src="{% static 'js/clearcart.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+{% include 'user/header.html' %}
+<div class="box">
+    {% block body %}
+
+    {% endblock %}
+</div>
+{% include 'user/footer.html' %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+<style>
+    li{
+        list-style: none;
+        float: left;
+        margin-left: 20px;
+        color:#5e5e5e;
+        font-family: 微软雅黑;
+    }
+    ul{
+        float: right;
+       position: relative;
+        right:1200px;
+        top:50px;
+    }
+    a{
+        color:999999;
+        font-family: 微软雅黑
+    }
+    .image{
+        width:1920px;
+        margin: 0 auto;
+    }
+</style>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<div class="header">
+    <div>
+        <span>
+            <a href="{% url 'users:user_center' %}">
+                {% if request.session.username %}
+                    欢迎你：{{ request.session.username }}
+                     <a href="{% url 'users:tuichu ' %}">退出</a>
+                {% else %}
+                    <a href="{% url 'users:denglu' %}">[登录]</a>
+                    <a href="{% url 'users:zhuce' %}">[注册有惊喜]</a>
+                {% endif %}
+            </a>
+        </span>
+        <a href="{% url 'manager:zhuce' %}" >[免费开店]</a>
+        <a href="{% url 'cart:gouwuche' %}">[购物车]</a>
+
+    </div>
+</div>
+<div class="image">
+    <a href="{% url 'users:index' %}"><img src="{% static 'images/1.gif' %}" alt=""></a>
+    <ul>
+        <li><a href="{% url 'users:index' %}"> 首页<br>Home</a></li>
+        <li><a href="{% url 'goods:goods_type' %}">鲜果<br>Fruit</a></li>
+        <li><a href="{% url 'users:user_center' %}">会员中心<br>Vip Club</a></li>
+        <li><a href="{% url 'store:store' %}">店铺<br>Store</a></li>
+    </ul>
+</div>

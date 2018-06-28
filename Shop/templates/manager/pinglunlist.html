@@ -1,0 +1,40 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'manager:pinglunlist' %}">评论管理</a>
+        <a href="{% url 'manager:pinglunlist' %}">评论列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>评论人</th>
+            <th>评论时间</th>
+            <th>商品</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in list %}
+                <tr>
+                    <td>{{ i.username }}</td>
+                    <td>{{ i.comment_time }}</td>
+                    <td>{{ i.goods_name }}</td>
+                    <td>
+                        <a href="{% url 'manager:chakan_pinglun' i.content_id %}">
+                            查看评论内容
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    {% empty %}
+                    <td colspan="4" align="center">暂无评论</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

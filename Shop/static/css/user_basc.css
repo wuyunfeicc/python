@@ -1,0 +1,27 @@
+a{
+    color:#999999
+}
+.box-left{
+    width:205px;
+    height:150px;
+    border:1px solid #dddddd;
+    position: relative;
+    left: 224px;
+    margin-top: 55px;
+}
+.box-left p{
+    height:50px;
+    line-height:50px;
+    text-align: center;
+    border-bottom:1px dashed #999999;
+}
+.box-right{
+    width:1023px;
+    position: relative;
+    left:550px;
+    top:-150px
+}
+.box-center{
+    width:1920px;
+    margin: 0 auto;
+}

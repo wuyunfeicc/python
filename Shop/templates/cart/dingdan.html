@@ -1,0 +1,102 @@
+<style>
+    .dingdan,.gongneng{
+        width:1200px;
+
+        margin: 0 auto;
+    }
+    .dingdan p{
+        height:62px;
+        font-size: 24px;
+        font-family: 微软雅黑;
+        line-height: 62px;
+        margin-top:24px;
+        border-bottom: 2px solid #4e5465;
+    }
+    .dingdan h5{
+        margin-top:30px
+    }
+    .dingdan_content th{
+        width:260px;
+        padding-bottom: 30px;
+    }
+    .dingdan_content table{
+        margin-left: 40px;
+    }
+    .dingdan_content tr{
+        border-bottom:1px dotted #9f9f9f;
+
+    }
+    .gongneng p{
+        height:60px;
+        line-height: 60px;
+        font-size: 14px;
+        position: relative;
+        left:1000px
+
+    }
+    .dingdan_content td{
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+</style>
+{% extends "user/basc.html" %}
+{% load static %}
+{% block body %}
+    <form action="{% url 'cart:addorder' %}" method="post">
+        {% csrf_token %}
+        <div class="dingdan">
+            <p>填写并核对订单信息</p>
+            <h5>收货人信息 <a href="{% url 'cart:address_shouhuo' %}">+新增收货地址</a></h5>
+            <div>
+                {% for i in list1 %}
+                    <input type="radio"  name="address_id" value="{{ i.address_id }}" checked/>
+                    {{ i.uname}} {{ i.phone }}  {{ i.address }}<br>
+                {% endfor %}
+            </div>
+            <div>
+                <p>配送信息</p>
+                <div class="dingdan_content">
+                    <table>
+                        <tr>
+                            <th>商品名称</th>
+                            <th>商品缩略图</th>
+                            <th>商品单价</th>
+                            <th>商品数量</th>
+                            <th>商品小计</th>
+                        </tr>
+                        {% for goods_list in list %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'goods:goods_xiangqing' goods_list.goods_id %}"> {{ goods_list.goods_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'goods:goods_xiangqing' goods_list.goods_id %}">
+                                            <img src="{% static goods_list.goods_pic%}" alt="" style="width: 60px;height: 60px">
+                                        </a>
+                                    </td>
+                                    <td>￥{{ goods_list.goods_xprice }}元</td>
+                                    <td>{{ goods_list.goods_num }}</td>
+                                    <td>￥{{ goods_list.goods_xiaoji }}元</td>
+                                </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="gongneng">
+            <p>
+                <a href="{% url 'cart:gouwuche' %}">返回购物车修改</a>
+            </p>
+            <p>
+                 总计:￥{{ sum_score.total}}元
+            </p>
+            <p >
+                <input type="submit" value="提交订单" style="height:36px;width:130px;background-color:#5fb878;text-align:center;line-height:36px;
+                                                        color:white;border-radius: 6px">
+            </p>
+        </div>
+        <input type="hidden" name="total" value="{{ sum_score.total }}">
+    </form>
+{% endblock %}
+

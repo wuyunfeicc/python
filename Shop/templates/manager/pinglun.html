@@ -1,0 +1,14 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+      <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'manager:pinglunlist' %}">评论管理</a>
+        <a href="{% url 'manager:pinglunlist' %}">评论列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+        {{ content.comment_content }}
+    </div>
+{% endblock %}

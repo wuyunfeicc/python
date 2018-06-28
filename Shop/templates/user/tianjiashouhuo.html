@@ -1,0 +1,69 @@
+<style>
+   .address-add #btu2{
+      width: 105px;
+        height:32px;
+        background-color: #65a034;
+        line-height: 32px;
+        color: white;
+        border-radius: 8px;
+        margin-top: 26px;
+   }
+     .address-add input{
+         margin-bottom: 15px;
+     }
+     .address-add h3{
+         margin-bottom: 15px;
+     }
+
+</style>
+{% extends 'user/user_base.html' %}
+{% load  static %}
+{% block box %}
+    <div class="address-add">
+        <h3>新增收货人地址信息</h3>
+        <form action="" method="post">
+            {% csrf_token %}
+            收货人：<input type="text" id="uname"><br>
+            详细地址：<input type="text" id="address"><br>
+            联系方式：<input type="text" id="phone"><br>
+            <input type="button" value="保存收货人信息" id="btu2">
+        </form>
+        <script>
+            $('#btu2').click(function () {
+                    var uname = $('#uname').val()
+                    var address = $('#address').val()
+                    var phone = $('#phone').val()
+                    var cd = phone.length
+                    {#csrf-token#}
+                    var token = $("input[name='csrfmiddlewaretoken']").val()
+                if(uname == '' || address =='' || phone ==''){
+                        alert('请正确添加收货人信息，谢谢')
+                    return false
+                }
+                if(cd!=11){
+                        alert('手机号码必须为11位')
+                }
+                $.ajax({
+                     type:'POST',
+                     url:"{% url 'users:tianjiadizhido' %}",
+                     data:JSON.stringify({
+                    'uname':uname,
+                    'address':address,
+                    'phone':phone,
+                    {#csrf-token#}
+                    'csrfmiddlewaretoken':token
+                }),
+                     headers:{'X-CSRFTOKEN':token},
+                     contentType:'application/json',
+                     success:function(msg){
+                            if(msg == 1){
+                                alert('地址添加成功')
+                                window.location.href = "{% url 'users:shouhuo' %}"
+                                return false
+                            }
+                     }
+                })
+            })
+        </script>
+    </div>
+{% endblock %}

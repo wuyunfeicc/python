@@ -1,0 +1,63 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+      <div class="x-body">
+        <form class="layui-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="layui-form-item">
+              <label for="username" class="layui-form-label">
+                  <span class="x-red">*</span>补充件数
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="type_name" name="goods_count" required=""
+                  autocomplete="off" class="layui-input" >
+              </div>
+          </div>
+         <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+             <input type="hidden" name="goods_id" value="{{ goods_id }}">
+             <input type="button" value="补充" class="layui-btn" lay-filter="add" lay-submit="" id="btn4">
+          </div>
+      </form>
+        <script>
+            $('#btn4').click(function () {
+                 var goods_count = $("input[name='goods_count']").val()
+                 var goods_id = $("input[name='goods_id']").val()
+                 var token = $("input[name='csrfmiddlewaretoken']").val()
+                 if(goods_count == ''){
+                     alert('补存数不能为0')
+                     return false
+                 }else{
+                     if(isNaN(goods_count)){
+                         alert('请正确填写，谢谢')
+                         return false
+                     }else{
+                         if(goods_count<=50){
+                             alert('最少50件。。。。。。')
+                             return false
+                         }
+                     }
+                 }
+                 $.ajax({
+                     type:"POST",
+                     url:"{% url 'manager:buchongdo' %}",
+                     data:JSON.stringify({
+                         'goods_count':goods_count,
+                         'goods_id':goods_id,
+                         'csrfmiddlewaretoken':token
+                     }),
+                     headers:{'X-CSRFTOKEN':token},
+                     contentType:'application/json',
+                     success:function (msg) {
+                         if(msg == 1){
+                             alert('添加成功')
+                             window.location.href="{% url 'manager:main' %}"
+                         }
+                     }
+                 })
+
+            })
+        </script>
+    </div>
+{% endblock %}

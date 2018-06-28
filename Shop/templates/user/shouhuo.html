@@ -1,0 +1,72 @@
+<style>
+    .shouhuodaaress p{
+    border-bottom: 1px solid #999999;
+        padding-bottom: 15px;
+    }
+    .shouhuodaaress div{
+        padding-top: 40px;
+    }
+    .shouhuodaaress #btu1{
+        width: 105px;
+        height:32px;
+        background-color: #65a034;
+        line-height: 32px;
+        color: white;
+        border-radius: 8px;
+        margin-top: 26px;
+    }
+    .shouhuodaaress a{
+        position: relative;
+        left: 760px;
+    }
+</style>
+{% extends 'user/user_base.html' %}
+{% load static %}
+{% block box %}
+    <div class="shouhuodaaress">
+        <p>收货人信息</p>
+        <form method="post">
+        {% csrf_token%}
+            <div class="shouhuodaaress1">
+                {% for i in address %}
+                    <span>{{ i.uname }}</span>
+                    <span>{{ i.phone }}</span>
+                    <span>{{ i.address }}</span>
+                    <a href="javaascript:void(0)" id="delate-dizhi" onclick="del({{ i.address_id }})">删除</a>
+                    <a href="{% url 'users:bianjiaddress' i.address_id%}" id="bianjidizhi">编辑</a><br>
+                {% endfor %}
+            </div>
+        </form>
+        <form action="{% url 'users:tjaddress' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for address in address %}
+                <input type="hidden" name="address_id" value="{{ address.address_id }}">
+            {% endfor %}
+            <input type="submit" id="btu1" value="添加收货地址">
+        </form>
+        <script>
+           function del(id) {
+                var token = $("input[name='csrfmiddlewaretoken']").val()
+                var address_id = id
+                var yes = confirm('确定删除么？')
+                if(yes){
+                    $.ajax({
+                        type:'POST',
+                        url:"{% url 'users:delatedizhi' %}",
+                        data:JSON.stringify({
+                             'csrfmiddlewaretoken':token,
+                             'address_id':address_id,
+                         }),
+                        headers:{'X-CSRFTOKEN':token},
+                        contentType:'application/json',
+                        success:function (msg) {
+                            if(msg == 1){
+                                window.location.href = "{% url 'users:shouhuo' %}"
+                                return false
+                            }
+                        }
+                    })}
+            }
+        </script>
+    </div>
+{% endblock %}

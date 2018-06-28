@@ -1,0 +1,19 @@
+{% extends "user/basc.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/denglu.css' %}">
+{% block body %}
+    <div class="middle" >
+    <img src="{% static 'images/1_07.gif' %}" alt="">
+    <div id="form1">
+        <form action="{% url 'users:dldo' %}" method="post" class="form-horizontal" role="form">
+             {% csrf_token %}
+             昵称： <input type="text"  name="username" class="form-control" ><br>
+             密码：<input type="password"  name="userpass" class="form-control"  ><br>
+             <div class="but">
+                <input type="submit" value="注册" class="btn btn-success">
+                <input type="submit" value="会员登录 " class="btn btn-success">
+             </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<style>
+    dl{
+        float: left;
+        margin-right: 45px;
+    }
+    .goods_type{
+        width:1300px;
+        margin: 0 auto;
+        font-size: 20px;
+        font-family: 微软雅黑;
+    }
+    .type_list{
+        margin-bottom: 20px;
+    }
+    .type_list_box{
+        position: relative;
+        left:50px
+    }
+</style>
+{% extends 'user/basc.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/goods_ye/index.css' %}">
+{% block body %}
+    <div class="goods_type">
+        <div class="type_list">类别：
+            <a href="{% url 'goods:goods_type'%}">全部</a>
+            {% for i in list %}
+                <a href="{% url 'goods:type' i.type_id %}">{{ i.type_name }}</a>
+            {% endfor %}
+        </div>
+    <div class="type_list_box">
+        {% for i in list1 %}
+            <div class="box_list">
+                <dl>
+                    <dt><a href="{% url 'goods:goods_xiangqing' i.id %}"><img src="{% static i.goods_pic %}" alt=""></a></dt>
+                       <dd>
+                        <p>
+                            <a href="{% url 'goods:goods_xiangqing' i.id %}">{{ i.goods_name }}</a>
+                        </p>
+                    </dd>
+                    <dd><p>{{ i.goods_xprice }}元</p></dd>
+                </dl>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}

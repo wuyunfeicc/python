@@ -1,0 +1,66 @@
+<style>
+    #goods div{
+        width:255px;
+        height: 340px;
+        float:left
+    }
+   .banner{
+       width:1560px;
+       margin:0 auto;
+   }
+    .more{
+        width:1000px;
+        position: relative;
+        top:-340px;
+        left: 300px;
+    }
+    .box_list{
+        width:300px;
+        height:300px;
+        margin-left: 20px;
+    }
+</style>
+{% extends 'user/basc.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/goods_ye/index.css' %}">
+{% block body %}
+    <div class="banner" >
+        <img src="{% static 'images/banner1.gif' %}" alt="">
+    </div>
+    <div id = 'goods' style="width:1420px;margin:auto;margin-top:20px;">
+
+{#    #循环获取到的商品所有信息#}
+        {% for goods_list in list %}
+            <div class="box_list">
+                <dl>
+                    <dt>
+
+                            <a href="{% url 'goods:goods_xiangqing' goods_list.id %}">
+                                <img src="{% static goods_list.goods_pic %}" alt="" style="width: 260px;height: 240px;">
+                            </a>
+                    </dt>
+                    <dd>
+                        <p>
+                            <a href="{% url 'goods:goods_xiangqing' goods_list.id %}">
+                                {{ goods_list.goods_name }}
+                            </a>
+
+                        </p>
+                    </dd>
+                    <dd>
+                        <p>
+                            ￥{{ goods_list.goods_xprice }}元
+                        </p>
+                        <span><a href="{% url 'store:storedetails' goods_list.manager_id %}">进店>{{ goods_list.shop_name }}</a></span>
+                    </dd>
+                </dl>
+            </div>
+
+        {% endfor %}
+    <div class="more">
+            <a href="{% url 'goods:goods_type' %}">
+                更多>
+            </a>
+        </div>
+    </div>
+{% endblock %}

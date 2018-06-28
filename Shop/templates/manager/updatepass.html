@@ -1,0 +1,89 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+          <div class="x-body">
+            <form class="layui-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="layui-form-item">
+                  <label for="username" class="layui-form-label">
+                      <span class="x-red">*</span>原密码
+                  </label>
+                  <div class="layui-input-inline">
+                      <input type="text" id="type_name" name="userypass" required=""
+                      autocomplete="off" class="layui-input" PlaceHolder="请输入原密码">
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <label for="phone" class="layui-form-label">
+                      <span class="x-red">*</span>当前密码
+                  </label>
+                  <div class="layui-input-inline">
+                      <input type="text" id="type_sort" name="userpass" required=""
+                      autocomplete="off" class="layui-input" PlaceHolder="请输入当前密码">
+                  </div>
+              </div>
+              <div class="layui-form-item">
+                  <label for="phone" class="layui-form-label">
+                      <span class="x-red">*</span>确认密码
+                  </label>
+                  <div class="layui-input-inline">
+                      <input type="text" id="type_sort" name="userqrpass" required=""
+                      autocomplete="off" class="layui-input" PlaceHolder="请确认当前密码">
+                  </div>
+              </div>
+             <div class="layui-form-item">
+                  <label for="L_repass" class="layui-form-label">
+                  </label>
+                 {% for i in list %}
+                    <input type="hidden" name="id" value="{{ i.manager_id }}" >
+                 {% endfor %}
+{#                  <button  class="layui-btn" lay-filter="add" id="btnup">#}
+{#                      更改#}
+{#                  </button>#}
+             <input type="button" value="修改" id="btnup"  class="layui-btn" lay-filter="add">
+             </div>
+        </form>
+               <script>
+                   $('#btnup').click(function () {
+                       var token = $("input[name='csrfmiddlewaretoken']").val()
+                       var userypass = $("input[name='userypass']").val()
+                       var userpass = $("input[name='userpass']").val()
+                       var userqrpass = $("input[name='userqrpass']").val()
+                       if(userqrpass == ''||userpass==''||userypass==''){
+                           alert('请正确输入，谢谢')
+                           return false
+                       }else {
+                           if (userpass != userqrpass) {
+                               alert('俩次输入的密码不一致')
+                               return false
+                           }
+                       }
+                       $.ajax({
+                           type:'POST',
+                           url:"{% url 'manager:updatepsdo' %}",
+                           data:JSON.stringify({
+                               'userpass':userpass,
+                               'userypass':userypass,
+                               'userqrpass':userqrpass,
+                               'csrfmiddlewaretoken':token
+                           }),
+                           headers:{'X-CSRFTOKEN':token},
+                           contentType:'application/json',
+                           success:function (msg) {
+                              if(msg==1){
+                                   alert('原密码输入不正确')
+                                   return false
+                              }else if(msg == 2){
+                              alert('原密码不能和新密码一致')
+                              return false
+                             }else {
+                             alert('密码修改成功')
+                             window.parent.location.href = "{% url 'manager:denglu' %}"
+                             return false
+                         }
+                           }
+                       })
+                   })
+               </script>
+       </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>全球生鲜卖家管理后台页面</title>
+    <link rel="stylesheet" href="{% static 'manager/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'manager/css/xadmin.css' %}">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'manager/lib/layui/layui.js' %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{% static 'manager/js/xadmin.js' %}"></script>
+  </head>
+  <body>
+    {% block content %}
+    {% endblock %}
+  </body>
+
+</html>
+

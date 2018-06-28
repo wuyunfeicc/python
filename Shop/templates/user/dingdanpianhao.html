@@ -1,0 +1,36 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+       <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'users:uservip' %}">会员管理</a>
+        <a href="{% url 'users:uservip' %}">会员列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>消费商品编号</th>
+            <th>消费商品名称</th>
+            <th>购买数量</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for list in list %}
+                <tr>
+                    <td>{{ list.goods_id }}</td>
+                    <td>{{ list.goods_name }}</td>
+                    <td>{{ list.goods_num }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td colspan="3" align="right">
+                        总消费：{{ sum_score.total }}
+                    </td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

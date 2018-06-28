@@ -1,0 +1,59 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+    <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'manager:dingdanlist' %}">订单管理</a>
+        <a href="{% url 'manager:dingdanlist' %}">订单列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>订单id</th>
+            <th>订单编号</th>
+            <th>下单时间</th>
+            <th>金额</th>
+            <th>订单状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in list %}
+              <tr>
+                <td>{{ i.order_id}}</td>
+                <td>{{ i.order_num}}</td>
+                <td>{{ i.order_time}}</td>
+                <td>{{ i.total }}</td>
+                <td>
+                    {% if i.order_status == 1 %}
+                        已付款
+                    {% elif  i.order_status == 2%}
+                        已发货
+                    {% elif  i.order_status == 3%}
+                        已收货,待买家评价！
+                     {% elif  i.order_status == 4%}
+                        已评价
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'manager:dingdanxq' i.order_id i.address_id %}">
+                        查看订单详情
+                    </a>
+
+                </td>
+                  {% empty %}
+                  <tr>
+                    <td colspan="10" align="center">暂无订单</td>
+                  </tr>
+          </tr>
+        {% endfor %}
+            <tr>
+                <td colspan="6"><span style="position: relative;left:1170px">总收入：￥{{ sum_shouru.total }}元</span></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

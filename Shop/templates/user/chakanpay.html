@@ -1,0 +1,35 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+<body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'users:uservip' %}">会员管理</a>
+        <a href="{% url 'users:uservip' %}">会员列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>订单ID</th>
+            <th>订单编号</th>
+            <th>下单时间</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in list %}
+                <tr>
+                    <td>{{ i.order_id }}</td>
+                    <td>
+                        <a href="{% url 'users:chakanxq' i.order_id%}">
+                            {{ i.order_num}}
+                        </a>
+                    </td>
+                    <td>{{ i.order_time}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}

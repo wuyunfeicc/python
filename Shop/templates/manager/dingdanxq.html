@@ -1,0 +1,64 @@
+{% extends 'common/basc_houtai.html' %}
+{% load static %}
+{% block content %}
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="{% url 'manager:dingdanlist' %}">订单管理</a>
+        <a href="{% url 'manager:dingdanlist' %}">订单列表</a>
+      </span>
+    </div>
+    <div class="x-body">
+    <table class="layui-table">
+         <thead>
+          <tr>
+		    <th>收件人</th>
+            <th>联系电话</th>
+            <th>收货地址</th>
+          </tr>
+        </thead>
+        <tobody>
+            <tr>
+                <td>{{ address_list.uname }}</td>
+                <td>{{ address_list.phone }}</td>
+                <td>{{ address_list.address }}</td>
+            </tr>
+        </tobody>
+    </table>
+      <table class="layui-table">
+        <thead>
+          <tr>
+		    <th>商品名称</th>
+            <th>商品图片</th>
+            <th>商品单价</th>
+            <th>商品数量</th>
+            <th>商品小计</th>
+
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in order %}
+              <tr>
+                <td>{{ i.goods_name }}</td>
+                <td><img src="{% static i.goods_pic %}" alt=""></td>
+                <td>{{ i.goods_price }}</td>
+                <td>{{ i.goods_num }}</td>
+                <td>{{ i.goods_xiaoji }}</td>
+                  {% empty %}
+                  <tr>
+                    <td colspan="8" align="center">暂无订单</td>
+                  </tr>
+          </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+         <form action="{% url 'manager:updatestatus'  %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+             <input type="hidden" name="order_id" value="{{ order_id }}">
+             {% for i in order %}
+                <input type="hidden" name="details_id" value="{{ i.details_id }}">
+             {% endfor %}
+             <input type="submit" value="点击发货" class="layui-btn">
+         </form>
+    </div>
+{% endblock %}
