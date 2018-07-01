@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <style>
+        a{
+    text-decoration:none;
+    color: black;
+}
+    </style>
+    <script src="{% static 'jquery.min.js' %}"></script>
+</head>
+<body>
+<h2 align="center">学生信息管理系统</h2>
+<div class="student-box">
+    <table cellspacing="0px" cellpadding="1px" border="1px">
+        <caption style="width: 630px;background-color: #999999;height: 32px;line-height: 32px;font-size: 20px;font-family: 微软雅黑;font-weight: bold">
+            学员信息
+        </caption>
+        <tr style="height: 30px;line-height: 30px">
+            <td>学号</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>年级</td>
+            <td>专业</td>
+            <td>地址</td>
+            <td>操作</td>
+        </tr>
+        <form method="post">
+            {% for i in list %}
+                {% csrf_token %}
+                <tr style="height: 30px;line-height: 30px">
+                    <td>{{ i.xuehao}}</td>
+                    <td>{{ i.stuname }}</td>
+                    <td>{{ i.stusex }}</td>
+                    <td>{{ i.age }}</td>
+                    <td>{{ i.grade }}</td>
+                    <td>{{ i.zhuanye }}</td>
+                    <td>{{ i.address }}</td>
+                    <td width="100px">
+                        <a href="{% url 'student:xiugai' i.stu_id %}">
+                            修改
+                        </a>
+                        <a href="#" onclick="shanchu({{ i.stu_id }})">
+                            删除
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </form>
+        <script>
+            function shanchu(id) {
+                var token = $("input[name='csrfmiddlewaretoken']").val()
+                var stu_id = id
+                var yes = confirm('确定要删除么')
+                if(yes){
+                    $.ajax({
+                        type:'POST',
+                        url:"{% url 'student:shanchu' %}",
+                        data:JSON.stringify({
+                            'stu_id':stu_id,
+                            'csrfmiddlewaretoken':token
+                        }),
+                        headers:{'X-CSRFTOKEN':token},
+                        contentType:'application/json',
+                        success:function (msg) {
+                            if(msg == 1){
+                                alert('删除成功')
+                                window.location.href="{% url 'student:index' %}"
+                            }
+                        }
+                    })
+                }
+            }
+        </script>
+    </table>
+    <p>
+        <a href="{% url 'student:add' %}">增加</a>
+    </p>
+</div>
+</body>
+</html>

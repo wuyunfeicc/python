@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'index.css' %} " rel="stylesheet" type="text/css">
+      <style>
+        a{
+            text-decoration:none;
+            color: black;
+        }
+    </style>
+    <script src="{% static 'jquery.min.js' %}"></script>
+</head>
+<body>
+    <h2 align="center" style="border-bottom: 2px solid #999999;height: 50px">添加学员信息页面</h2>
+
+        <div class="add_stu">
+            <h3 align="center" style="font-weight: bold;height: 30px;line-height: 30px;width:300px;background-color: #999999 " >
+                学员信息
+            </h3>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+               学号： <input type="text" name="xuehao" id="xuehao"><br>
+               姓名： <input type="text" name="stuname" id="stuname"><br>
+               性别： <input type="text" name="stusex" id="stusex"><br>
+               年龄： <input type="text" name="age" id="age"><br>
+               年级： <input type="text" name="grade" id="grade"><br>
+               专业： <input type="text" name="zhuanye" id="zhuanye"><br>
+               地址： <input type="text" name="address" id="address"><br>
+                {%  for i in student %}
+                    <input type="hidden" id="stu_id" value="{{ i.stu_id }}">
+                {% endfor %}
+                <div align="center">
+                    <input type="button" value="添加" id="btn">
+                    <input type="reset" value="重填" style="margin-right: 45px">
+                    <a href="{% url 'student:index' %}">
+                        返回主页
+                    </a>
+                </div>
+            </form>
+            <script>
+                $('#btn').click(function () {
+                    var xuehao = $('#xuehao').val()
+                    var stuname = $('#stuname').val()
+                    var stusex = $('#stusex').val()
+                    var age = $('#age').val()
+                    var grade = $('#grade').val()
+                    var zhuanye = $('#zhuanye').val()
+                    var address = $('#address').val()
+                    var token = $("input[name='csrfmiddlewaretoken']").val()
+                    var stu_id = $('#stu_id').val()
+                    if(xuehao==''|stuname==''|stusex==''|age==''|grade==''|zhuanye==''|address==''){
+                        alert('请正确填写学员信息')
+                        return false
+                    }
+                    $.ajax({
+                        type:'POST',
+                        url:"{% url 'student:add' %}",
+                        data:JSON.stringify({
+                            'xuehao':xuehao,
+                            'stuname':stuname,
+                            'stusex':stusex,
+                            'age':age,
+                            'grade':grade,
+                            'zhuanye':zhuanye,
+                            'address':address,
+                            'csrfmiddlewaretoken':token,
+                            'stu_id':stu_id
+                        }),
+                        headers:{'X-CSRFTOKEN':token},
+                        contentType:'application/json',
+                        success:function (msg) {
+                            if(msg == 1){
+                                alert('添加成功')
+                                window.location.href="{% url 'student:index' %}"
+                            }
+                            else if(msg == 2){
+                                alert('学号不能重复')
+                                return false
+                            }
+                        }
+                    })
+                })
+            </script>
+        </div>
+</body>
+</html>

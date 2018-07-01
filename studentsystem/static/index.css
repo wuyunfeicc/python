@@ -1,0 +1,16 @@
+.student-box{
+    width:630px;
+    height: 600px;
+    margin: 0 auto;
+}
+.student-box td{
+    width: 80px;
+}
+.add_stu{
+     width:300px;
+    height: 600px;
+    margin: 0 auto;
+}
+.add_stu input{
+    margin-bottom: 20px;
+}
